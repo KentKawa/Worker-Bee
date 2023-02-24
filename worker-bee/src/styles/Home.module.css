@@ -1,4 +1,73 @@
 .home {
   height: 100rem;
   background-color: rgb(235, 235, 238);
+  overflow: hidden;
+}
+
+.titleContainer {
+  display: flex;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 3em;
+}
+
+.beekeeper img {
+  border-radius: 4em;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  color: white;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.459);
+}
+
+.textContainer h1 {
+  font-size: 8em;
+}
+
+.textContainer p {
+  font-size: 2em;
+}
+
+@media (max-width: 700px) {
+  .textContainer {
+    height: 60%;
+  }
+  .textContainer h1 {
+    font-size: 6em;
+  }
+}
+
+.cardContainer {
+  display: flex;
+  height: 70vh;
+  flex-direction: row;
+  width: inherit;
+  align-items: center;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.card {
+  height: 30%;
+  width: 30%;
+  margin: 0 2em;
+  border-radius: 4em;
+}
+
+.card img {
+  align-self: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 2em 2em 0 0;
 }
