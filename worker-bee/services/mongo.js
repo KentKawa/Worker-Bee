@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const { DB_CONN_STRING } = process.env;
 
-let cached = clobal.mongoose;
+let cached = global.mongoose;
 
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };

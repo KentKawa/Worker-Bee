@@ -1,5 +1,5 @@
 .home {
-  height: 100rem;
+  height: 100%;
   background-color: rgb(235, 235, 238);
   overflow: hidden;
 }
@@ -39,6 +39,78 @@
   font-size: 2em;
 }
 
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  width: inherit;
+  margin-bottom: 3em;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: inherit;
+  width: 30%;
+  margin: 0 2em;
+  padding: 1em;
+  border-radius: 2em;
+  border: 1px solid;
+  box-shadow: inset 1px 2px rgba(0, 0, 0, 0.137),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.pin {
+  position: relative;
+  top: 50px;
+}
+
+.card img {
+  align-self: center;
+  justify-self: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 2em 2em 0 0;
+}
+
+.card p {
+  width: 100%;
+}
+
+.visible {
+  opacity: 0;
+  filter: blur(2px);
+  transform: translateY(100%);
+  animation: 1s 1 ease-in rise forwards;
+}
+.cardContainer .visible:nth-child(2) {
+  animation: 1.5s 1 ease-in rise forwards;
+}
+.cardContainer .visible:nth-child(3) {
+  animation: 2s 1 ease-in rise forwards;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.notVisible {
+  opacity: 0;
+  min-height: inherit;
+}
+
 @media (max-width: 700px) {
   .textContainer {
     height: 60%;
@@ -46,28 +118,13 @@
   .textContainer h1 {
     font-size: 6em;
   }
-}
-
-.cardContainer {
-  display: flex;
-  height: 70vh;
-  flex-direction: row;
-  width: inherit;
-  align-items: center;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.card {
-  height: 30%;
-  width: 30%;
-  margin: 0 2em;
-  border-radius: 4em;
-}
-
-.card img {
-  align-self: center;
-  padding: 0;
-  margin: 0;
-  border-radius: 2em 2em 0 0;
+  .cardContainer {
+    flex-direction: column;
+    height: 100%;
+  }
+  .card {
+    width: 50%;
+    margin: 2em 0;
+    text-align: center;
+  }
 }
