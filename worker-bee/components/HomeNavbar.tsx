@@ -10,7 +10,7 @@ const HomeNavbar: React.FC = () => {
   return (
     <Navbar collapseOnSelect expand="lg">
       <Container>
-        <Navbar.Brand href="">
+        <Navbar.Brand href="/">
           <Image src={brand} alt="icon" width={30} height={30} /> Hive
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
