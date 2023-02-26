@@ -13,3 +13,8 @@
     0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
   border-radius: 2em;
 }
+
+.error {
+  color: rgb(253, 15, 15);
+  font-size: 0.8em;
+}
