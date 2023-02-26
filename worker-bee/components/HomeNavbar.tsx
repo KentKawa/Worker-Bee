@@ -3,7 +3,6 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import brand from "../public/honeyCombIcon.png";
 import Image from "next/image";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 const HomeNavbar: React.FC = () => {
@@ -16,7 +15,7 @@ const HomeNavbar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
-            <Nav.Link onClick={() => signIn()}>Login</Nav.Link>
+            <Nav.Link href="/Login">Login</Nav.Link>
             <Nav.Link>About</Nav.Link>
             <Nav.Link>Contact</Nav.Link>
           </Nav>

@@ -21,7 +21,19 @@ export default async function handler(
       if (check) {
         res.status(400).json({ data: "invalid email" });
       }
-      res.json(await UserModel.create(req.body).catch(catcher));
+      const user = new UserModel({
+        firstName: req.body.firstName,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+      });
+      try {
+        user.save();
+        return res.status(200).end();
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: error });
+      }
     },
     PUT: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
@@ -30,4 +42,7 @@ export default async function handler(
       await dbConnect();
     },
   };
+  const response = handleCase[method];
+  if (response) response(req, res);
+  else res.status(400).json({ error: "No response for this request" });
 }

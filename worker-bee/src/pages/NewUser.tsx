@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import React, { useState, FormEventHandler, useRef } from "react";
-import { newUser } from "next-auth/react";
 //COMPONENTS
 import HomeNavbar from "components/HomeNavbar";
 import Link from "next/link";
@@ -53,6 +52,7 @@ const NewUser: NextPage = (props): JSX.Element => {
     }
     return error.state;
   };
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const check = await validateForm(
@@ -64,10 +64,16 @@ const NewUser: NextPage = (props): JSX.Element => {
     );
     if (check) {
       return;
+    } else {
+      await fetch(`http://localhost:3000/api/User/createUser`, {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signUp),
+      });
     }
     console.log("here");
-    await fetch(`http://localhost:3000/api/User/createUser`, {});
   };
+
   return (
     <div>
       <HomeNavbar />
