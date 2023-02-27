@@ -1,29 +1,40 @@
 import React, { useState, FormEventHandler } from "react";
+import { NextPage } from "next";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+//COMPONENTS
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Link from "next/link";
-import { NextPage } from "next";
-import { signIn } from "next-auth/react";
+import HomeNavbar from "components/HomeNavbar";
+//STYLES
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "../styles/Login.module.css";
-import HomeNavbar from "components/HomeNavbar";
 
 const SignIn: NextPage = (props): JSX.Element => {
   const [login, setLogin] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const router = useRouter();
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const res = await signIn("credentials", {
+    const response = await signIn("credentials", {
       email: login.email,
       password: login.password,
+      redirect: false,
     });
-    console.log(res);
+    if (response?.status === 200) {
+      router.push("/Profile");
+    } else {
+      setError("Email or Password invalid");
+    }
   };
 
   return (
     <div className={style.page}>
       <HomeNavbar />
       <Form onSubmit={handleSubmit} className={style.form}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
@@ -31,11 +42,8 @@ const SignIn: NextPage = (props): JSX.Element => {
             value={login.email}
             onChange={(e) => setLogin({ ...login, email: e.target.value })}
           />
-          <Form.Text className="text-muted">
-            We will never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -44,6 +52,7 @@ const SignIn: NextPage = (props): JSX.Element => {
             onChange={(e) => setLogin({ ...login, password: e.target.value })}
           />
         </Form.Group>
+        <p className={style.error}>{error}</p>
         <Button variant="primary" type="submit" className={style.submitButton}>
           Submit
         </Button>

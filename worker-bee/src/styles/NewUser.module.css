@@ -18,3 +18,10 @@
   color: rgb(253, 15, 15);
   font-size: 0.8em;
 }
+
+.success {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 3em;
+}

@@ -1,5 +1,5 @@
 import dbConnect from "services/mongo";
-import UserModel from "models/user.model";
+import UserSchema from "models/user.model";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseFuncs } from "services/mongo.type";
 
@@ -13,26 +13,28 @@ export default async function handler(
   const handleCase: ResponseFuncs = {
     GET: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
-      res.json(await UserModel.find({}));
+      res.json(await UserSchema.find({}));
     },
     POST: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
-      const check = await UserModel.findOne({ email: req.query.email });
+      const check = await UserSchema.findOne({ email: req.body.email });
       if (check) {
-        res.status(400).json({ data: "invalid email" });
-      }
-      const user = new UserModel({
-        firstName: req.body.firstName,
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-      });
-      try {
-        user.save();
-        return res.status(200).end();
-      } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: error });
+        return res.status(400).json({ data: "Invalid email" });
+      } else {
+        const user = new UserSchema({
+          firstName: req.body.firstName,
+          lastName: "",
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
+        });
+        try {
+          const result = await user.save();
+          return res.status(200).json({ result });
+        } catch (error) {
+          console.log(error);
+          return res.status(500).json({ error: error });
+        }
       }
     },
     PUT: async (req: NextApiRequest, res: NextApiResponse) => {

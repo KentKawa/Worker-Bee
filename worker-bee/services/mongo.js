@@ -15,7 +15,7 @@ export default async function dbConnect() {
 
   if (!cached.promise) {
     const opts = { useNewUrlParser: true };
-
+    mongoose.set("strictQuery", true);
     cached.promise = mongoose.connect(DB_CONN_STRING, opts).then((mongoose) => {
       console.log("connect");
       return mongoose;

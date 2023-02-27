@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import React, { useState, FormEventHandler, useRef } from "react";
+import { useRouter } from "next/router";
 //COMPONENTS
 import HomeNavbar from "components/HomeNavbar";
-import Link from "next/link";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 //STYLES
@@ -25,6 +25,7 @@ const NewUser: NextPage = (props): JSX.Element => {
     password: "",
     state: false,
   });
+  const router = useRouter();
 
   const validateForm = (
     firstName: string,
@@ -38,7 +39,7 @@ const NewUser: NextPage = (props): JSX.Element => {
     } else if (!username) {
       setError({ ...error, username: "Username required", state: true });
     } else if (!/\S+@\S+\.\S+/.test(email) || !email) {
-      setError({ ...error, email: "Enter valid email", state: true });
+      setError({ ...error, email: "Invalid email", state: true });
     } else if (password !== confirmPassword || !password || !confirmPassword) {
       setError({ ...error, password: "Passwords do not match", state: true });
     } else {
@@ -65,20 +66,31 @@ const NewUser: NextPage = (props): JSX.Element => {
     if (check) {
       return;
     } else {
-      await fetch(`http://localhost:3000/api/User/createUser`, {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signUp),
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/User/createUser`,
+        {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(signUp),
+        }
+      );
+      console.log(response);
+      if (response.status === 200) {
+        router.push("/NewUserLogin");
+      } else if (response.status === 400) {
+        setError({ ...error, email: "Invalid email", state: true });
+        return;
+      } else if (response.status === 500) {
+        return;
+      }
     }
-    console.log("here");
   };
 
   return (
     <div>
       <HomeNavbar />
       <Form onSubmit={handleSubmit} className={style.form}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>First Name</Form.Label>
           <Form.Control
             type="text"
@@ -90,7 +102,7 @@ const NewUser: NextPage = (props): JSX.Element => {
           />
           <p className={style.error}>{error.firstName}</p>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
@@ -100,17 +112,20 @@ const NewUser: NextPage = (props): JSX.Element => {
           />
           <p className={style.error}>{error.username}</p>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
             value={signUp.email}
             onChange={(e) => setSignUp({ ...signUp, email: e.target.value })}
-          />
+          />{" "}
+          <Form.Text className="text-muted">
+            We will never share your email with anyone else.
+          </Form.Text>
           <p className={style.error}>{error.email}</p>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -119,7 +134,7 @@ const NewUser: NextPage = (props): JSX.Element => {
             onChange={(e) => setSignUp({ ...signUp, password: e.target.value })}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
