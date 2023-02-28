@@ -1,7 +1,7 @@
 import NextAuth from "next-auth/next";
 import { NextAuthOptions } from "next-auth";
 import dbConnect from "../../../../services/mongo";
-import userSchema from "../../../../models/user.model";
+import UserSchema from "../../../../models/user.model";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
         await dbConnect();
-        const response = await userSchema.findOne({ email });
+        const response = await UserSchema.findOne({ email });
         if (response) {
           if (response.password === password) {
             console.log(response);

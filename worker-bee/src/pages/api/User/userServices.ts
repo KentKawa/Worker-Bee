@@ -13,7 +13,16 @@ export default async function handler(
   const handleCase: ResponseFuncs = {
     GET: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
-      res.json(await UserSchema.find({}));
+      const response = await UserSchema.find(
+        { email: req.query.email },
+        { _id: 1, username: 1 }
+      );
+      console.log(response[0]);
+      if (response) {
+        return res.status(200).json(response[0]);
+      } else {
+        return res.status(400).end();
+      }
     },
     POST: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();

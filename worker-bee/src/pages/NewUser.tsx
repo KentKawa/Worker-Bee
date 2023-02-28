@@ -67,7 +67,7 @@ const NewUser: NextPage = (props): JSX.Element => {
       return;
     } else {
       const response = await fetch(
-        `http://localhost:3000/api/User/createUser`,
+        `http://localhost:3000/api/User/userServices`,
         {
           method: "post",
           headers: { "Content-Type": "application/json" },
