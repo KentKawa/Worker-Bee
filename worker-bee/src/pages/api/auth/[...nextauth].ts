@@ -18,7 +18,7 @@ export const authOptions: NextAuthOptions = {
         const response = await UserSchema.findOne({ email });
         if (response) {
           if (response.password === password) {
-            console.log(response);
+            console.log("RESPONSE", response._id);
             return response;
           }
         }

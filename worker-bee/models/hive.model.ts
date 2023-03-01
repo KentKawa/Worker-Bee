@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const hiveLIstSchema = new mongoose.Schema(
   {
-    userId: { type: String, required: true },
+    _id: { type: String, required: true },
     hiveList: { type: Array, required: true },
   },
   { strict: true }

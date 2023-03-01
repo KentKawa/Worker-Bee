@@ -1,5 +1,7 @@
 import React from "react";
 import { useInView } from "react-intersection-observer";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 //COMPONENTS
 import HomeNavbar from "components/HomeNavbar";
 import Footer from "components/Footer";
@@ -15,11 +17,17 @@ import pinIcon from "../../public/map-location-svgrepo-com.png";
 import beekeeper from "../../public/pexelsAneteLusinaBeeKeep.jpg";
 
 export default function Home() {
+  const { status } = useSession();
+  const router = useRouter();
   const { ref, inView } = useInView({
     threshold: 0.7,
     initialInView: true,
     triggerOnce: true,
   });
+
+  if (status === "authenticated") {
+    router.push("/Profile");
+  }
 
   return (
     <div id="Home" className={home.home}>

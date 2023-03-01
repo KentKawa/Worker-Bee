@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import React, { useState, FormEventHandler, useRef } from "react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 //COMPONENTS
 import HomeNavbar from "components/HomeNavbar";
 import Form from "react-bootstrap/Form";
@@ -8,6 +9,7 @@ import Button from "react-bootstrap/Button";
 //STYLES
 import style from "../styles/NewUser.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Loading from "components/Loading";
 
 const NewUser: NextPage = (props): JSX.Element => {
   const [signUp, setSignUp] = useState({
@@ -26,6 +28,7 @@ const NewUser: NextPage = (props): JSX.Element => {
     state: false,
   });
   const router = useRouter();
+  const { data, status } = useSession();
 
   const validateForm = (
     firstName: string,
@@ -86,68 +89,87 @@ const NewUser: NextPage = (props): JSX.Element => {
     }
   };
 
+  if (status === "authenticated") {
+    router.push("/Profile");
+  }
+  if (status === "unauthenticated") {
+    return (
+      <div>
+        <HomeNavbar />
+        <Form onSubmit={handleSubmit} className={style.form}>
+          <Form.Group className="mb-3">
+            <Form.Label>First Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter first name"
+              value={signUp.firstName}
+              onChange={(e) =>
+                setSignUp({ ...signUp, firstName: e.target.value })
+              }
+            />
+            <p className={style.error}>{error.firstName}</p>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              value={signUp.username}
+              onChange={(e) =>
+                setSignUp({ ...signUp, username: e.target.value })
+              }
+            />
+            <p className={style.error}>{error.username}</p>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={signUp.email}
+              onChange={(e) => setSignUp({ ...signUp, email: e.target.value })}
+            />{" "}
+            <Form.Text className="text-muted">
+              We will never share your email with anyone else.
+            </Form.Text>
+            <p className={style.error}>{error.email}</p>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={signUp.password}
+              onChange={(e) =>
+                setSignUp({ ...signUp, password: e.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <p className={style.error}>{error.password}</p>
+          </Form.Group>
+          <Button
+            variant="primary"
+            type="submit"
+            className={style.submitButton}
+          >
+            Submit
+          </Button>
+        </Form>
+      </div>
+    );
+  }
   return (
     <div>
       <HomeNavbar />
-      <Form onSubmit={handleSubmit} className={style.form}>
-        <Form.Group className="mb-3">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter first name"
-            value={signUp.firstName}
-            onChange={(e) =>
-              setSignUp({ ...signUp, firstName: e.target.value })
-            }
-          />
-          <p className={style.error}>{error.firstName}</p>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username"
-            value={signUp.username}
-            onChange={(e) => setSignUp({ ...signUp, username: e.target.value })}
-          />
-          <p className={style.error}>{error.username}</p>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={signUp.email}
-            onChange={(e) => setSignUp({ ...signUp, email: e.target.value })}
-          />{" "}
-          <Form.Text className="text-muted">
-            We will never share your email with anyone else.
-          </Form.Text>
-          <p className={style.error}>{error.email}</p>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={signUp.password}
-            onChange={(e) => setSignUp({ ...signUp, password: e.target.value })}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <p className={style.error}>{error.password}</p>
-        </Form.Group>
-        <Button variant="primary" type="submit" className={style.submitButton}>
-          Submit
-        </Button>
-      </Form>
+      <Loading />
     </div>
   );
 };

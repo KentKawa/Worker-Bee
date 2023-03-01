@@ -17,9 +17,8 @@ export default async function handler(
         { email: req.query.email },
         { _id: 1, username: 1 }
       );
-      console.log(response[0]);
       if (response) {
-        return res.status(200).json(response[0]);
+        return res.status(200).json({ response });
       } else {
         return res.status(400).end();
       }
