@@ -7,7 +7,7 @@ import { Location } from "./mapInterface";
 const Map: React.FC<Location> = ({ lat, lng }) => {
   return (
     <MapContainer
-      style={{ height: "590px" }}
+      style={{ height: "30em" }}
       center={{ lat: 35.6762, lng: 139.6503 }}
       minZoom={3}
       zoom={18}

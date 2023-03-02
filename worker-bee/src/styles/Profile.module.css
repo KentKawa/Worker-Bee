@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: row;
   width: 100vw;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .button {
@@ -28,18 +28,27 @@
 }
 
 .pageContainer {
-  height: 590px;
+  height: fit-content;
+  width: 100vw;
 }
 
 .map {
-  height: max-content;
-  border: 1px dashed black;
+  position: relative;
+  height: fit-content;
+  z-index: 0;
 }
 
 .hives {
-  height: 590px;
+  height: 100%;
+  display: flex;
+  bottom: 0;
+  z-index: 1;
+  overflow-y: scroll;
 }
 
 .graph {
-  height: max-content;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  overflow-y: scroll;
 }

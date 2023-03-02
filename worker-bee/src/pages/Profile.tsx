@@ -96,25 +96,14 @@ const Profile: NextPage = (): JSX.Element => {
             </Button>
           </div>
           <div className={style.pageContainer}>
-            <div
-              className={style.map}
-              style={
-                pages.map ? { visibility: "visible" } : { visibility: "hidden" }
-              }
-            >
-              <Map lat={0} lng={0} />
+            <div className={style.map}>
+              {pages.map ? <Map lat={0} lng={0} /> : <div></div>}
             </div>
-            <div
-              className={style.hives}
-              style={pages.hives ? { display: "flex" } : { display: "none" }}
-            >
-              <List />
+            <div className={style.hives}>
+              {pages.hives ? <List /> : <div></div>}
             </div>
-            <div
-              className={style.graph}
-              style={pages.graph ? { display: "flex" } : { display: "none" }}
-            >
-              <Graph />
+            <div className={style.graph}>
+              {pages.graph ? <Graph /> : <div></div>}
             </div>
           </div>
         </div>

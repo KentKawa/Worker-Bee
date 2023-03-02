@@ -5,7 +5,7 @@ import {
   BsFacebook,
   BsFillTelephoneFill,
 } from "react-icons/bs";
-import style from "../src/styles/Footer.module.css";
+import style from "./Footer.module.css";
 
 const Footer: React.FC = () => {
   return (

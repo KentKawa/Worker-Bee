@@ -1,13 +1,15 @@
-const PopupMarkers = (props) => {
-  if (props.latlng.length > 0) {
+import BeeIcon from "./BeeIcon";
+import { Hive } from "./mapInterface";
+import { Marker, Popup } from "react-leaflet";
+
+const PopupMarkers: React.FC<Hive> = ({ name, location, weight }) => {
+  if (location.length > 0) {
     return (
-      <Marker title={props.name} icon={beeIcon} position={props.latlng}>
+      <Marker title={name} icon={BeeIcon} position={location}>
         <Popup>
-          {props.name} WT:{props.weight}
-          <br />
-          {props.temperament}
+          {name} WT:{weight}
         </Popup>
       </Marker>
     );
-  } else return;
+  } else return null;
 };

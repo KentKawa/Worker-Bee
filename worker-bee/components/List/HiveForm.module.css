@@ -1,0 +1,7 @@
+.formContainer {
+  height: auto;
+  border-radius: 0 0 1em 0;
+  padding: 2em;
+  background-color: #c6c7c8;
+  z-index: 1;
+}

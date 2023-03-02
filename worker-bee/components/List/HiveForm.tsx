@@ -4,9 +4,12 @@ import React, {
   FormEventHandler,
   ChangeEventHandler,
 } from "react";
+//COMPONENTS
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import MapDynamic from "../Map/MapDynamic";
+//STYLE
+import style from "./HiveForm.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const HiveForm = () => {
@@ -76,28 +79,26 @@ const HiveForm = () => {
   };
 
   return (
-    <div className="bg-secondary rounded p-3" style={{ height: "100%" }}>
-      <Form className="row" onSubmit={onSubmit}>
-        <Form.Group className="col-sm-6 mb-2">
-          <Form.Label className="fw-bold text-dark">Name</Form.Label>
+    <div className={style.formContainer}>
+      <Form onSubmit={onSubmit}>
+        <Form.Group>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             onChange={(e) => setHiveName(e.target.value)}
             value={hiveName}
             type="text"
           />
         </Form.Group>
-        <Form.Group className="col-sm-6 mb-2">
-          <Form.Label className="fw-bold text-dark">Weight</Form.Label>
+        <Form.Group>
+          <Form.Label>Weight</Form.Label>
           <Form.Control
             onChange={(e) => setWeight(Number(e.target.value))}
             value={weight}
             type="number"
           />
         </Form.Group>
-        <Form.Group className="row mx-auto col-sm-6 mb-2">
-          <Form.Label className="fw-bold text-dark">
-            Date of Queen placement
-          </Form.Label>
+        <Form.Group>
+          <Form.Label>Date of Queen placement</Form.Label>
           <input
             onChange={(e) => setQueenPlaced(e.target.value)}
             className="rounded"
@@ -105,8 +106,8 @@ const HiveForm = () => {
             type="date"
           />
         </Form.Group>
-        <Form.Group className="col-sm-6 mb-2">
-          <Form.Label className="fw-bold text-dark">Temperament</Form.Label>
+        <Form.Group>
+          <Form.Label>Temperament</Form.Label>
           <Form.Range
             onChange={(e) => setTemperament(Number(e.target.value))}
             min={0}
@@ -114,16 +115,16 @@ const HiveForm = () => {
             step={1}
             value={temperament}
           />
-          <p className="my-0 fst-italic">{temperamentName()}</p>
+          <p>{temperamentName()}</p>
         </Form.Group>
-        <Form.Group className="mb-2">
-          <Form.Label className="fw-bold text-dark">Location</Form.Label>
-          <div style={{ height: "50vh" }}>
+        <Form.Group>
+          <Form.Label>Location</Form.Label>
+          <div style={{ height: "100px" }}>
             <MapDynamic lat={0} lng={0} />
           </div>
         </Form.Group>
-        <Form.Group className="col-sm-6 mb-2">
-          <Form.Label className="fw-bold text-dark">Medicine</Form.Label>
+        <Form.Group>
+          <Form.Label>Medicine</Form.Label>
           <Form.Check
             onChange={checkboxMedsHandler}
             type="checkbox"
@@ -155,8 +156,8 @@ const HiveForm = () => {
             label={"moth+"}
           />
         </Form.Group>
-        <Form.Group className="col-sm-6 mb-2">
-          <Form.Label className="fw-bold text-dark">Disease</Form.Label>
+        <Form.Group>
+          <Form.Label>Disease</Form.Label>
           <Form.Check
             onChange={checkboxDiseaseHandler}
             type="checkbox"
@@ -195,9 +196,7 @@ const HiveForm = () => {
           />
         </Form.Group>
         <div>
-          <Button className="btn btn-warning col-sm-3 m-2" type="submit">
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </div>
       </Form>
     </div>
