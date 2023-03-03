@@ -2,9 +2,9 @@ import { LeafletMouseEvent } from "leaflet";
 import { useState, useRef, useMemo } from "react";
 import { useMapEvents, Marker } from "react-leaflet";
 import BeeIcon from "./BeeIcon";
-import { Location } from "./mapInterface";
+import { Hive } from "./mapInterface";
 
-const DraggableMarker: React.FC<Location> = ({ lat, lng }) => {
+const DraggableMarker: React.FC<Hive> = ({ location }) => {
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const markerRef = useRef(null);
   const eventHandlers = useMemo(
