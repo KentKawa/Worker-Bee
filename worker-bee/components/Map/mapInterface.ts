@@ -1,6 +1,8 @@
-export interface Location {
-  lat: number;
-  lng: number;
+export interface User {
+  name: string;
+  username: string;
+  hives: {};
+  schedule: [];
 }
 
 export interface Hive {
