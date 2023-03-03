@@ -7,7 +7,7 @@ import Loading from "../../components/Loading";
 import HomeNavbar from "../../components/HomeNavbar";
 import Button from "react-bootstrap/Button";
 import Image from "next/image";
-import Map from "../../components/Map/MapDynamic";
+import Map from "../../components/Map/MapDynamicNoSSR";
 import Graph from "../../components/Graph/Graph";
 import List from "../../components/List/List";
 //STYLES
@@ -20,7 +20,7 @@ import graph from "../../public/bar-chart.png";
 
 const Profile: NextPage = (): JSX.Element => {
   const [user, setUser] = useState({ _id: "", username: "" });
-  const [pages, setPages] = useState({ hives: true, map: false, graph: false });
+  const [pages, setPages] = useState({ hives: false, map: true, graph: false });
   const { data, status } = useSession();
   console.log(data, status);
   const router = useRouter();
@@ -96,14 +96,16 @@ const Profile: NextPage = (): JSX.Element => {
             </Button>
           </div>
           <div className={style.pageContainer}>
-            <div className={style.map}>
-              {pages.map ? <Map lat={0} lng={0} /> : <div></div>}
-            </div>
-            <div className={style.hives}>
-              {pages.hives ? <List /> : <div></div>}
-            </div>
-            <div className={style.graph}>
-              {pages.graph ? <Graph /> : <div></div>}
+            <div className={style.pages}>
+              {pages.map ? (
+                <Map lat={0} lng={0} />
+              ) : pages.hives ? (
+                <List />
+              ) : pages.graph ? (
+                <Graph />
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         </div>
