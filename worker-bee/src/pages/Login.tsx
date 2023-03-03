@@ -47,7 +47,12 @@ const SignIn: NextPage = (props): JSX.Element => {
               type="email"
               placeholder="Enter email"
               value={login.email}
-              onChange={(e) => setLogin({ ...login, email: e.target.value })}
+              onChange={(e) =>
+                setLogin({
+                  ...login,
+                  email: e.target.value.toLocaleLowerCase(),
+                })
+              }
             />
           </Form.Group>
           <Form.Group className="mb-3">

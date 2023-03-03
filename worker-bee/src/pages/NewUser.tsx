@@ -11,7 +11,7 @@ import style from "../styles/NewUser.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Loading from "components/Loading";
 
-const NewUser: NextPage = (props): JSX.Element => {
+const NewUser: NextPage = (): JSX.Element => {
   const [signUp, setSignUp] = useState({
     firstName: "",
     lastName: "",
@@ -25,7 +25,7 @@ const NewUser: NextPage = (props): JSX.Element => {
     username: "",
     email: "",
     password: "",
-    state: false,
+    state: true,
   });
   const router = useRouter();
   const { data, status } = useSession();
@@ -43,15 +43,17 @@ const NewUser: NextPage = (props): JSX.Element => {
       setError({ ...error, username: "Username required", state: true });
     } else if (!/\S+@\S+\.\S+/.test(email) || !email) {
       setError({ ...error, email: "Invalid email", state: true });
-    } else if (password !== confirmPassword || !password || !confirmPassword) {
+    } else if (password !== confirmPassword || !password) {
       setError({ ...error, password: "Passwords do not match", state: true });
     } else {
-      setError({
-        firstName: "",
-        username: "",
-        email: "",
-        password: "",
-        state: false,
+      setError(() => {
+        return {
+          firstName: "",
+          username: "",
+          email: "",
+          password: "",
+          state: false,
+        };
       });
     }
     return error.state;
@@ -59,7 +61,7 @@ const NewUser: NextPage = (props): JSX.Element => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const check = await validateForm(
+    const check = validateForm(
       signUp.firstName,
       signUp.username,
       signUp.email,
@@ -127,7 +129,12 @@ const NewUser: NextPage = (props): JSX.Element => {
               type="email"
               placeholder="Enter email"
               value={signUp.email}
-              onChange={(e) => setSignUp({ ...signUp, email: e.target.value })}
+              onChange={(e) =>
+                setSignUp({
+                  ...signUp,
+                  email: e.target.value.toLocaleLowerCase(),
+                })
+              }
             />{" "}
             <Form.Text className="text-muted">
               We will never share your email with anyone else.
