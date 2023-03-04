@@ -1,13 +1,13 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import { Location } from "./mapInterface";
+import { User } from "./mapInterface";
 
-const MapNoSSR = dynamic(() => import("./MapDynamic"), { ssr: false });
+const MapNoSSR = dynamic(() => import("./MapStatic"), { ssr: false });
 
-const MapDynamic: React.FC<Location> = ({ lat, lng }) => {
+const MapDynamic: React.FC<User> = ({ hives }) => {
   return (
-    <div style={{ height: "100%" }}>
-      <MapNoSSR lat={lat} lng={lng} />
+    <div style={{ height: "100%", width: "100%" }}>
+      <MapNoSSR hives={hives} />
     </div>
   );
 };
