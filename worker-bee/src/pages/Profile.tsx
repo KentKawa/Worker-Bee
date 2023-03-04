@@ -7,7 +7,7 @@ import Loading from "../../components/Loading";
 import HomeNavbar from "../../components/HomeNavbar";
 import Button from "react-bootstrap/Button";
 import Image from "next/image";
-import Map from "../../components/Map/MapDynamicNoSSR";
+import MapStatic from "../../components/Map/MapStaticNoSSR";
 import Graph from "../../components/Graph/Graph";
 import List from "../../components/List/List";
 //STYLES
@@ -19,7 +19,12 @@ import map from "../../public/map-location-svgrepo-com.png";
 import graph from "../../public/bar-chart.png";
 
 const Profile: NextPage = (): JSX.Element => {
-  const [user, setUser] = useState({ _id: "", username: "" });
+  const [user, setUser] = useState({
+    _id: "",
+    username: "",
+    hives: {},
+    schedule: [],
+  });
   const [pages, setPages] = useState({ hives: false, map: true, graph: false });
   const { data, status } = useSession();
   console.log(data, status);
@@ -43,7 +48,10 @@ const Profile: NextPage = (): JSX.Element => {
             ...user,
             _id: res.response[0]._id,
             username: res.response[0].username,
+            hives: res.response[0].hives,
+            schedule: res.response[0].schedule,
           });
+          console.log(user);
         });
     }
   }, [status]);
@@ -98,7 +106,7 @@ const Profile: NextPage = (): JSX.Element => {
           <div className={style.pageContainer}>
             <div className={style.pages}>
               {pages.map ? (
-                <Map lat={0} lng={0} />
+                <MapStatic hives={user.hives} />
               ) : pages.hives ? (
                 <List />
               ) : pages.graph ? (
