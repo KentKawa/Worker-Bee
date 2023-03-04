@@ -16,6 +16,7 @@ const List: React.FC = () => {
   return (
     <div className={style.list}>
       {formOpen ? <HiveForm /> : <div></div>}
+      {}
       <button
         onClick={handleFormOpen}
         className={
