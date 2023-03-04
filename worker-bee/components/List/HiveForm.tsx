@@ -7,7 +7,7 @@ import React, {
 //COMPONENTS
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import MapDynamic from "../Map/MapDynamic";
+import MapDynamic from "../Map/MapDynamicNoSSR";
 //STYLE
 import style from "./HiveForm.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,9 +17,9 @@ const HiveForm = () => {
     [weight, setWeight] = useState(0),
     [queenPlaced, setQueenPlaced] = useState(""),
     [temperament, setTemperament] = useState(5),
-    [medicine, setMedicine] = useState([""]),
-    [disease, setDisease] = useState([""]);
-  const location = useRef([]);
+    [medicine, setMedicine] = useState<string[]>([]),
+    [disease, setDisease] = useState<string[]>([]);
+  const location = useRef<[number, number]>([0, 0]);
 
   const temperamentName = () => {
     if (temperament <= 2) {
@@ -37,9 +37,9 @@ const HiveForm = () => {
 
   const checkboxMedsHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.currentTarget.checked) {
-      setMedicine([...medicine, e.currentTarget.value]);
+      setMedicine([...medicine, e.currentTarget.id]);
     } else {
-      let index = medicine.indexOf(e.currentTarget.value);
+      let index = medicine.indexOf(e.currentTarget.id);
       let tempArray = [...medicine];
       tempArray.splice(index, 1);
       setMedicine(tempArray);
@@ -48,9 +48,9 @@ const HiveForm = () => {
 
   const checkboxDiseaseHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.currentTarget.checked) {
-      setDisease([...disease, e.currentTarget.value]);
+      setDisease([...disease, e.currentTarget.id]);
     } else {
-      let index = disease.indexOf(e.currentTarget.value);
+      let index = disease.indexOf(e.currentTarget.id);
       let tempArray = [...disease];
       tempArray.splice(index, 1);
       setDisease(tempArray);
@@ -59,8 +59,16 @@ const HiveForm = () => {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    console.log(
+      hiveName,
+      weight,
+      queenPlaced,
+      temperament,
+      location.current,
+      medicine,
+      disease
+    );
     // const response = fetch(`CHANGE ME TO RIGHT API`, {
-    //   _id,
     //   hiveName,
     //   weight,
     //   queenPlaced,
@@ -73,8 +81,8 @@ const HiveForm = () => {
     // setWeight(0);
     // setQueenPlaced("");
     // setTemperament(5);
-    // setMedicine([]);
-    // setDisease([]);
+    // setMedicine([""]);
+    // setDisease([""]);
     // location.current = [];
   };
 
@@ -119,8 +127,8 @@ const HiveForm = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Location</Form.Label>
-          <div style={{ height: "100px" }}>
-            <MapDynamic lat={0} lng={0} />
+          <div style={{ height: "200px" }}>
+            <MapDynamic location={location} />
           </div>
         </Form.Group>
         <Form.Group>
