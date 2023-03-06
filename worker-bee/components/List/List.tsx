@@ -1,24 +1,52 @@
 import React, { useState } from "react";
+import { User } from "components/Map/mapInterface";
 //COMPONENTS
 import Image from "next/image";
 import HiveForm from "./HiveForm";
+import ApiaryForm from "./ApiaryForm";
 //STYLES
 import style from "./List.module.css";
 //ASSETS
 import plusCircle from "../../public/form/plus-circle.png";
+import ListItem from "./ListItem";
 
-const List: React.FC = () => {
-  const [formOpen, setFormOpen] = useState(false);
-  const handleFormOpen = () => {
-    setFormOpen(!formOpen);
-    console.log("click");
+const List: React.FC<User> = ({ hives, _id }) => {
+  const [formOpen, setFormOpen] = useState(false),
+    [apiaryOpen, setApiaryOpen] = useState(false);
+
+  const handleFormOpen = (form: string) => {
+    if (form === "apiary") {
+      setApiaryOpen(!apiaryOpen);
+    } else {
+      setFormOpen(!formOpen);
+    }
   };
+
   return (
     <div className={style.list}>
-      {formOpen ? <HiveForm /> : <div></div>}
-      {}
+      {formOpen ? <HiveForm hives={hives} _id={_id} /> : <div></div>}
+      {apiaryOpen ? <ApiaryForm hives={hives} _id={_id} /> : <div></div>}
+      <div className={style.listContainer}>
+        <ListItem hives={hives} />
+      </div>
+
       <button
-        onClick={handleFormOpen}
+        onClick={() => handleFormOpen("apiary")}
+        className={
+          apiaryOpen
+            ? `${style.apiaryOpen} ${style.open}`
+            : `${style.apiaryOpen} ${style.close}`
+        }
+      >
+        <Image
+          src={plusCircle}
+          alt={formOpen ? "X to close" : "+ to open"}
+          height={50}
+          width={50}
+        />
+      </button>
+      <button
+        onClick={() => handleFormOpen("hive")}
         className={
           formOpen
             ? `${style.formOpen} ${style.open}`
@@ -28,8 +56,8 @@ const List: React.FC = () => {
         <Image
           src={plusCircle}
           alt={formOpen ? "X to close" : "+ to open"}
-          height={50}
-          width={50}
+          height={40}
+          width={40}
         />
       </button>
     </div>
