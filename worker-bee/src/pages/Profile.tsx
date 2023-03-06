@@ -25,9 +25,9 @@ const Profile: NextPage = (): JSX.Element => {
     hives: {},
     schedule: [],
   });
-  const [pages, setPages] = useState({ hives: false, map: true, graph: false });
+  const [pages, setPages] = useState({ hives: true, map: false, graph: false });
   const { data, status } = useSession();
-  console.log(data, status);
+  console.log(data, status, user);
   const router = useRouter();
 
   useEffect(() => {
@@ -51,7 +51,6 @@ const Profile: NextPage = (): JSX.Element => {
             hives: res.response[0].hives,
             schedule: res.response[0].schedule,
           });
-          console.log(user);
         });
     }
   }, [status]);
@@ -108,7 +107,7 @@ const Profile: NextPage = (): JSX.Element => {
               {pages.map ? (
                 <MapStatic hives={user.hives} />
               ) : pages.hives ? (
-                <List />
+                <List hives={user.hives} _id={user._id} />
               ) : pages.graph ? (
                 <Graph />
               ) : (
