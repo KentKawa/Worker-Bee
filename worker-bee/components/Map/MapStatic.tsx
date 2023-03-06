@@ -5,7 +5,6 @@ import { User } from "./mapInterface";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import FlyToButton from "./FlyToButton";
-import PopUpMarkers from "./PopUpMarkers";
 import BeeIcon from "./BeeIcon";
 
 const Map: React.FC<User> = ({ hives }) => {
@@ -15,7 +14,7 @@ const Map: React.FC<User> = ({ hives }) => {
       for (let key of name) {
         return (
           <DropdownButton
-            style={{ zIndex: 500, justifySelf: "right" }}
+            style={{ zIndex: 500, justifySelf: "flex-end" }}
             title={key}
           >
             {hives[key].map((ele) => {
@@ -46,7 +45,7 @@ const Map: React.FC<User> = ({ hives }) => {
                   position={ele.location}
                 >
                   <Popup>
-                    <p>{ele.name}</p> <br />
+                    <p>{ele.name}</p> <hr />
                     <p>WT:{ele.weight}</p>
                   </Popup>
                 </Marker>
@@ -70,8 +69,8 @@ const Map: React.FC<User> = ({ hives }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors<br/><a href="https://www.flaticon.com/free-icons/bee" title="bee icons">Bee icons created by Freepik - Flaticon</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <div style={{ width: "100%", display: "flex" }}>{getHiveNames()}</div>
       {placeMarkers()}
-      {getHiveNames()}
     </MapContainer>
   );
 };
