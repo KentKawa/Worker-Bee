@@ -1,7 +1,32 @@
 .formContainer {
   height: auto;
-  border-radius: 0 0 1em 0;
+  border-radius: 1em;
   padding: 2em;
   background-color: #c6c7c8;
   z-index: 1;
+}
+
+.checkboxContainer button {
+  margin-top: 1em;
+}
+
+.formContainer label {
+  font-weight: bolder;
+}
+
+.temperamentBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.error {
+  font-size: 0.8em;
+  color: rgb(253, 15, 15);
 }
