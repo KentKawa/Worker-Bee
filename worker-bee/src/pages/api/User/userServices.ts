@@ -25,8 +25,8 @@ export default async function handler(
     },
     POST: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
-      const check = await UserSchema.findOne({ email: req.body.email });
-      if (check) {
+      const response = await UserSchema.findOne({ email: req.body.email });
+      if (response) {
         return res.status(400).json({ data: "Invalid email" });
       } else {
         const user = new UserSchema({
@@ -83,6 +83,26 @@ export default async function handler(
     },
     PUT: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
+      console.log("PUT", req.body);
+      const response = await UserSchema.findById({ _id: req.query._id });
+      const options = { upsert: true, setDefaultsOnInsert: true, new: true };
+      if (response) {
+        console.log("PUT", response);
+        await UserSchema.findOneAndUpdate(
+          {
+            _id: req.body._id,
+          },
+          {
+            $set: { [`hives.${req.body.apiaryName}`]: [] },
+          },
+          options,
+          (error, results) => {
+            console.log(results);
+          }
+        );
+        res.status(200).end();
+      }
+      res.status(400).end();
     },
     DELETE: async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
