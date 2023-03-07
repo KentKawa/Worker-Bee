@@ -10,7 +10,7 @@ import style from "./List.module.css";
 import plusCircle from "../../public/form/plus-circle.png";
 import ListItem from "./ListItem";
 
-const List: React.FC<User> = ({ hives, _id }) => {
+const List: React.FC<User> = ({ hives, _id, setUser }) => {
   const [formOpen, setFormOpen] = useState(false),
     [apiaryOpen, setApiaryOpen] = useState(false);
 
@@ -24,8 +24,16 @@ const List: React.FC<User> = ({ hives, _id }) => {
 
   return (
     <div className={style.list}>
-      {formOpen ? <HiveForm hives={hives} _id={_id} /> : <div></div>}
-      {apiaryOpen ? <ApiaryForm hives={hives} _id={_id} /> : <div></div>}
+      {formOpen ? (
+        <HiveForm hives={hives} _id={_id} setUser={setUser} />
+      ) : (
+        <div></div>
+      )}
+      {apiaryOpen ? (
+        <ApiaryForm hives={hives} _id={_id} setUser={setUser} />
+      ) : (
+        <div></div>
+      )}
       <div className={style.listContainer}>
         <ListItem hives={hives} />
       </div>
