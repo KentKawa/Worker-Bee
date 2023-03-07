@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import React, { useState, FormEventHandler, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import axios from "axios";
 //COMPONENTS
 import HomeNavbar from "components/HomeNavbar";
 import Form from "react-bootstrap/Form";
@@ -71,23 +72,28 @@ const NewUser: NextPage = (): JSX.Element => {
     if (check) {
       return;
     } else {
-      const response = await fetch(
-        `http://localhost:3000/api/User/userServices`,
-        {
-          method: "post",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(signUp),
-        }
-      );
-      console.log(response);
-      if (response.status === 200) {
-        router.push("/NewUserLogin");
-      } else if (response.status === 400) {
-        setError({ ...error, email: "Invalid email", state: true });
-        return;
-      } else if (response.status === 500) {
-        return;
-      }
+      const response = await axios
+        .post(`http://localhost:3000/api/User/createUser`, {
+          firstName: signUp.firstName,
+          username: signUp.username,
+          email: signUp.email,
+          password: signUp.password,
+        })
+        .then((res) => {
+          console.log("New User Response:", res);
+          if (res.status === 200) {
+            router.push("/NewUserLogin");
+          }
+        })
+        .catch((err) => {
+          console.log("New User Error:", err);
+          if (err.response.status === 400) {
+            setError({ ...error, email: "Invalid email", state: true });
+            return;
+          } else if (err.response.status === 500) {
+            return;
+          }
+        });
     }
   };
 
