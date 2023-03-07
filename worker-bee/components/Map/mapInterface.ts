@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface User {
   _id?: string;
   name?: string;
@@ -16,16 +18,7 @@ export interface User {
     ];
   };
   schedule?: [];
-}
-
-export interface Hive {
-  name?: string;
-  weight?: number;
-  queenPlaced?: string;
-  temperament?: number;
-  medicine?: string[];
-  disease?: string[];
-  location?: [0, 0];
+  setUser?: Dispatch<SetStateAction<User>>;
 }
 
 export interface Ref {
