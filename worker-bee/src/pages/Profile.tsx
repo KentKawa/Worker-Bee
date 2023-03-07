@@ -1,7 +1,9 @@
 import { NextPage } from "next";
+import { User } from "../../components/Map/mapInterface";
 import React, { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import axios from "axios";
 //COMPONENTS
 import Loading from "../../components/Loading";
 import HomeNavbar from "../../components/HomeNavbar";
@@ -19,15 +21,16 @@ import map from "../../public/map-location-svgrepo-com.png";
 import graph from "../../public/bar-chart.png";
 
 const Profile: NextPage = (): JSX.Element => {
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     _id: "",
+    name: "",
     username: "",
     hives: {},
     schedule: [],
   });
   const [pages, setPages] = useState({ hives: true, map: false, graph: false });
   const { data, status } = useSession();
-  console.log(data, status, user);
+  console.log("Data:", data, "User", user, "Status:", status);
   const router = useRouter();
 
   useEffect(() => {
@@ -35,22 +38,25 @@ const Profile: NextPage = (): JSX.Element => {
       router.push("/Login");
     }
     if (status === "authenticated") {
-      const profile = fetch(
-        `http://localhost:3000/api/User/userServices?email=${data?.user?.email}`,
-        {
-          method: "get",
-          headers: { "Content-Type": "application/json" },
-        }
-      )
-        .then((res) => res.json())
+      const response = axios
+        .get(
+          `http://localhost:3000/api/User/getUser?email=${data?.user?.email}`
+        )
         .then((res) => {
-          setUser({
-            ...user,
-            _id: res.response[0]._id,
-            username: res.response[0].username,
-            hives: res.response[0].hives,
-            schedule: res.response[0].schedule,
-          });
+          console.log("Profile fetch:", res);
+          if (res.status === 200) {
+            setUser({
+              ...user,
+              _id: res.data.results[0]._id,
+              name: res.data.results[0].name,
+              username: res.data.results[0].username,
+              hives: res.data.results[0].hives,
+              schedule: res.data.results[0].schedule,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   }, [status]);
@@ -107,7 +113,7 @@ const Profile: NextPage = (): JSX.Element => {
               {pages.map ? (
                 <MapStatic hives={user.hives} />
               ) : pages.hives ? (
-                <List hives={user.hives} _id={user._id} />
+                <List hives={user.hives} _id={user._id} setUser={setUser} />
               ) : pages.graph ? (
                 <Graph />
               ) : (
