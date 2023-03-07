@@ -1,10 +1,11 @@
 import React, { useState, useEffect, FormEventHandler } from "react";
+import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { User } from "../Map/mapInterface";
 import style from "./HiveForm.module.css";
 
-const ApiaryForm: React.FC<User> = ({ hives, _id }) => {
+const ApiaryForm: React.FC<User> = ({ hives, _id, setUser }) => {
   const [apiaryName, setApiaryName] = useState(""),
     [error, setError] = useState(false);
 
@@ -19,21 +20,26 @@ const ApiaryForm: React.FC<User> = ({ hives, _id }) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    // const response = await fetch(
-    //   `http://localhost:3000/api/User/userServices?_id=${_id}`,
-    //   {
-    //     method: "put",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(apiaryName),
-    //   }
-    // );
-    console.log("DOES THIS EVEN RUN");
+    const response = await axios
+      .put(`http://localhost:3000/api/Hive/createApiary?_id=${_id}`, {
+        apiaryName: apiaryName,
+      })
+      .then((res) => {
+        if (setUser) {
+          console.log("Apiary Update:", res);
+          setUser((prev) => ({ ...prev, hives: res.data }));
+          setApiaryName("");
+        }
+      })
+      .catch((err) => {
+        console.log("Apiary Error:", err);
+      });
   };
 
   return (
     <div className={style.formContainer}>
-      <Form>
-        <Form.Group onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
           <Form.Label>Apiary</Form.Label>
           <Form.Control
             onChange={(e) => setApiaryName(e.target.value)}
