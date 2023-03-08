@@ -7,7 +7,8 @@ export interface User {
   hives?: {
     [hiveName: string]: [
       {
-        name: string;
+        _id: string;
+        hiveName: string;
         weight: number;
         queenPlaced: string;
         temperament: number;
