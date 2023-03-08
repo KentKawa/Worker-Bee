@@ -18,35 +18,7 @@ export default async function handler(
       email: req.body.email,
       password: req.body.password,
       hives: {
-        Pasadena: [
-          {
-            name: "hive1",
-            weight: 100,
-            queenPlaced: "03-03-2023",
-            temperament: 5,
-            medicine: ["med1", "med2"],
-            disease: ["disease1", "disease2"],
-            location: [0, 0],
-          },
-          {
-            name: "hive2",
-            weight: 100,
-            queenPlaced: "03-04-2023",
-            temperament: 5,
-            medicine: ["med1", "med2"],
-            disease: ["disease1", "disease2"],
-            location: [0, 0],
-          },
-          {
-            name: "hive3",
-            weight: 100,
-            queenPlaced: "03-05-2023",
-            temperament: 5,
-            medicine: ["med1", "med2"],
-            disease: ["disease1", "disease2"],
-            location: [0, 0],
-          },
-        ],
+        Pasadena: [],
       },
       schedule: {
         hive1: { meds: "03-03-2023" },
