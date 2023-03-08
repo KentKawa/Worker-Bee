@@ -151,7 +151,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
         </Form.Group>
         <Form.Group>
           <Form.Label>
-            <Image src={Weight} alt="honey" height={20} /> Weight
+            <Image src={Weight} alt="weight" height={20} /> Weight
           </Form.Label>
           <Form.Control
             onChange={(e) => setWeight(Number(e.target.value))}
@@ -161,7 +161,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
         </Form.Group>
         <Form.Group style={{ display: "flex", flexDirection: "column" }}>
           <Form.Label>
-            <Image src={Crown} alt="honey" height={20} /> Date of Queen
+            <Image src={Crown} alt="crown" height={20} /> Date of Queen
             placement
           </Form.Label>
           <input
@@ -181,15 +181,15 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
             value={temperament}
           />
           <div className={style.temperamentBar}>
-            <Image src={HappyFace} alt="honey" height={20} />{" "}
-            <Image src={NeutralFace} alt="honey" height={20} />{" "}
-            <Image src={SadFace} alt="honey" height={20} />{" "}
+            <Image src={HappyFace} alt="happy face" height={20} />{" "}
+            <Image src={NeutralFace} alt="neutral face" height={20} />{" "}
+            <Image src={SadFace} alt="sad face" height={20} />{" "}
           </div>
           <p style={{ fontStyle: "italic" }}>{temperamentName()}</p>
         </Form.Group>
         <Form.Group>
           <Form.Label>
-            <Image src={Pin} alt="honey" height={20} /> Location
+            <Image src={Pin} alt="map pin" height={20} /> Location
           </Form.Label>
           <div style={{ height: "200px" }}>
             <MapDynamic location={location} />
@@ -198,7 +198,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
         <div className={style.checkboxContainer}>
           <Form.Group>
             <Form.Label>
-              <Image src={Meds} alt="honey" height={20} /> Medicine
+              <Image src={Meds} alt="medicine" height={20} /> Medicine
             </Form.Label>
             <Form.Check
               onChange={checkboxMedsHandler}
@@ -233,7 +233,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>
-              <Image src={Disease} alt="honey" height={20} /> Disease
+              <Image src={Disease} alt="disease" height={20} /> Disease
             </Form.Label>
             <Form.Check
               onChange={checkboxDiseaseHandler}
