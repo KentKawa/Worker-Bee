@@ -35,7 +35,7 @@ const List: React.FC<User> = ({ hives, _id, setUser }) => {
         <div></div>
       )}
       <div className={style.listContainer}>
-        <ListItem hives={hives} />
+        <ListItem hives={hives} _id={_id} setUser={setUser} />
       </div>
 
       <button
