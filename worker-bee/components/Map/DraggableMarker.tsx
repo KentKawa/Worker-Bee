@@ -5,7 +5,11 @@ import BeeIcon from "./BeeIcon";
 import { Ref } from "./mapInterface";
 
 const DraggableMarker: React.FC<Ref> = ({ location }) => {
-  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const [position, setPosition] = useState(
+    location
+      ? { lat: location.current[0], lng: location.current[1] }
+      : { lat: 0, lng: 0 }
+  );
   const markerRef = useRef<any>(null);
 
   useEffect(() => {
