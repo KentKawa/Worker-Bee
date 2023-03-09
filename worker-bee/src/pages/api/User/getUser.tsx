@@ -9,14 +9,13 @@ export default async function handler(
   await dbConnect();
   const response = UserSchema.find(
     { email: req.query.email },
-    { _id: 1, firstName: 1, username: 1, hives: 1, schedule: 1 },
-    (err, results) => {
-      if (err) {
-        console.log("Get User Error:", err);
-        return res.status(400).json({ err });
-      } else {
-        return res.status(200).json({ results });
-      }
-    }
-  );
+    { _id: 1, username: 1, hives: 1, schedule: 1 }
+  )
+    .then((results) => {
+      res.status(200).json({ results });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({ err });
+    });
 }
