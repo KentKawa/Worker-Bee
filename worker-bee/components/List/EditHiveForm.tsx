@@ -140,7 +140,7 @@ const EditHiveForm: React.FC<editForm> = ({
 
     const response = axios
       .put(`http://localhost:3000/api/Hive/updateHive?_id=${_id}`, {
-        hiveId: hive_id,
+        _id: hive_id,
         apiaryName,
         hiveName,
         weight,
@@ -151,9 +151,9 @@ const EditHiveForm: React.FC<editForm> = ({
         disease,
       })
       .then((res) => {
-        console.log(res);
+        console.log(`Updated hive`, res.data.results.hives);
         if (setUser) {
-          setUser((prev) => ({ ...prev, hives: res.data.hives }));
+          setUser((prev) => ({ ...prev, hives: res.data.results.hives }));
         }
       })
       .catch((err) => {
