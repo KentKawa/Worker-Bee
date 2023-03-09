@@ -23,14 +23,13 @@ import graph from "../../public/bar-chart.png";
 const Profile: NextPage = (): JSX.Element => {
   const [user, setUser] = useState<User>({
     _id: "",
-    name: "",
     username: "",
     hives: {},
     schedule: [],
   });
   const [pages, setPages] = useState({ hives: true, map: false, graph: false });
   const { data, status } = useSession();
-  console.log("Data:", data, "User", user, "Status:", status);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -48,7 +47,6 @@ const Profile: NextPage = (): JSX.Element => {
             setUser({
               ...user,
               _id: res.data.results[0]._id,
-              name: res.data.results[0].name,
               username: res.data.results[0].username,
               hives: res.data.results[0].hives,
               schedule: res.data.results[0].schedule,
@@ -59,6 +57,7 @@ const Profile: NextPage = (): JSX.Element => {
           console.log(err);
         });
     }
+    console.log("Data:", data, "User", user, "Status:", status);
   }, [status]);
 
   const handleOpen: React.MouseEventHandler<HTMLButtonElement> = (e) => {
