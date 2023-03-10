@@ -152,6 +152,7 @@ const EditHiveForm: React.FC<editForm> = ({
       })
       .then((res) => {
         console.log(`Updated hive`, res.data.results.hives);
+        console.log(res);
         if (setUser) {
           setUser((prev) => ({ ...prev, hives: res.data.results.hives }));
         }
