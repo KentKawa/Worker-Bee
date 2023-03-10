@@ -39,9 +39,11 @@
 @keyframes rotateOpen {
   from {
     transform: rotate(0);
+    box-shadow: 0 2px rgba(0, 0, 0, 0.137);
   }
   to {
     transform: rotate(133deg);
+    box-shadow: none;
   }
 }
 
@@ -51,8 +53,10 @@
 @keyframes rotateClose {
   from {
     transform: rotate(133deg);
+    box-shadow: none;
   }
   to {
     transform: rotate(0);
+    box-shadow: 0 2px rgba(0, 0, 0, 0.137);
   }
 }
