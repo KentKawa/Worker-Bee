@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { User } from "components/Map/mapInterface";
 //COMPONENTS
 import Image from "next/image";
@@ -13,6 +13,10 @@ import ListItem from "./ListItem";
 const List: React.FC<User> = ({ hives, _id, setUser }) => {
   const [formOpen, setFormOpen] = useState(false),
     [apiaryOpen, setApiaryOpen] = useState(false);
+
+  useEffect(() => {
+    setFormOpen(false);
+  }, [hives]);
 
   const handleFormOpen = (form: string) => {
     if (form === "apiary") {
