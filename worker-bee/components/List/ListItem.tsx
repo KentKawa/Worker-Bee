@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { User } from "components/Map/mapInterface";
+import axios from "axios";
 //COMPONENTS
 import EditHiveForm from "./EditHiveForm";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -23,17 +24,61 @@ type ComponentState = {
 };
 
 const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
-  const [openApiary, setOpenApiary] = useState<ComponentState>({});
+  const [openApiary, setOpenApiary] = useState<ComponentState>({}),
+    [openEditHives, setOpenEditHives] = useState<ComponentState>({}),
+    [openDeleteHives, setOpenDeleteHives] = useState<ComponentState>({});
 
   const toggleOpenApiary = (apiaryNames: string) => {
     setOpenApiary((prev) => ({ ...prev, [apiaryNames]: !prev[apiaryNames] }));
   };
 
+  const toggleOpenEdit = (hiveId: string) => {
+    setOpenEditHives((prev) => ({ ...prev, [hiveId]: !prev[hiveId] }));
+  };
+
+  const toggleOpenDelete = (hiveId: string) => {
+    setOpenDeleteHives((prev) => ({ ...prev, [hiveId]: !prev[hiveId] }));
+  };
+
+  const handleDelete = (
+    hive: {
+      _id: any;
+      hiveName?: string;
+      weight?: number;
+      queenPlaced?: string;
+      temperament?: number;
+      medicine?: string[];
+      disease?: string[];
+      location?: [0, 0];
+    },
+    apiary: string
+  ) => {
+    console.log(hive, apiary);
+    const response = axios
+      .put(`http://localhost:3000/api/Hive/deleteHive?_id=${_id}`, {
+        _id: hive._id,
+        apiaryName: apiary,
+      })
+      .then((res) => {
+        console.log(res);
+        if (setUser) {
+          setUser((prev) => ({ ...prev, hives: res.data.results.hives }));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     if (hives) {
       const name = Object.keys(hives);
-      name.map((ele) => {
-        setOpenApiary({ ...openApiary, ele: true });
+      name.map((apiary) => {
+        setOpenApiary({ ...openApiary, apiary: false });
+        hives[apiary].map((hive) => {
+          setOpenEditHives((prev) => ({ ...prev, [hive._id]: false }));
+          setOpenDeleteHives((prev) => ({ ...prev, [hive._id]: false }));
+        });
       });
     }
   }, [hives]);
@@ -58,22 +103,24 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
             >
               {hives[key].length > 0
                 ? hives[key].map((ele) => (
-                    <>
-                      <ListGroup.Item
-                        variant="dark"
-                        key={ele.hiveName}
-                        className={style.listItem}
-                      >
+                    <div key={ele.hiveName}>
+                      <ListGroup.Item variant="dark" className={style.listItem}>
                         <div className={style.hiveNameContainer}>
                           <Image src={Hive} alt="bee hive" height={25} />
                           <h4>{ele.hiveName}</h4>
                           <Image src={Weight} alt="scale" height={25} />
                           <h4>{ele.weight}</h4>
                           <div className={style.buttonContainer}>
-                            <Button variant="outline-secondary">
+                            <Button
+                              variant="outline-secondary"
+                              onClick={() => toggleOpenEdit(ele._id)}
+                            >
                               <AiFillEdit />
                             </Button>
-                            <Button variant="outline-danger">
+                            <Button
+                              variant="outline-danger"
+                              onClick={() => toggleOpenDelete(ele._id)}
+                            >
                               <AiFillDelete />
                             </Button>
                           </div>
@@ -91,14 +138,39 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
                           ))}
                         </div>
                       </ListGroup.Item>
-                      <EditHiveForm
-                        hives={hives}
-                        _id={_id}
-                        setUser={setUser}
-                        editHive={ele}
-                        currentApiaryName={key}
-                      />
-                    </>
+                      {openEditHives[ele._id] ? (
+                        <EditHiveForm
+                          hives={hives}
+                          _id={_id}
+                          setUser={setUser}
+                          editHive={ele}
+                          currentApiaryName={key}
+                        />
+                      ) : (
+                        <div></div>
+                      )}
+                      {openDeleteHives[ele._id] ? (
+                        <div className={style.deleteContainer}>
+                          <h4>
+                            Are you sure you would like to delete this hive?
+                          </h4>
+                          <Button
+                            variant="light"
+                            onClick={() => toggleOpenDelete(ele._id)}
+                          >
+                            Cancel
+                          </Button>{" "}
+                          <Button
+                            variant="danger"
+                            onClick={() => handleDelete(ele, key)}
+                          >
+                            DELETE
+                          </Button>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
                   ))
                 : null}
             </div>
