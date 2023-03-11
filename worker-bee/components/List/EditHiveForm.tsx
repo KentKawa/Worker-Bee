@@ -75,6 +75,7 @@ const EditHiveForm: React.FC<editForm> = ({
   const location = useRef<[number, number]>(
     editHive ? editHive.location : [0, 0]
   );
+  const oldApiary = currentApiaryName || "";
   const hive_id = editHive ? editHive._id : "";
 
   useEffect(() => {
@@ -142,6 +143,7 @@ const EditHiveForm: React.FC<editForm> = ({
       .put(`http://localhost:3000/api/Hive/updateHive?_id=${_id}`, {
         _id: hive_id,
         apiaryName,
+        oldApiary,
         hiveName,
         weight,
         queenPlaced,
@@ -188,6 +190,7 @@ const EditHiveForm: React.FC<editForm> = ({
             <Image src={Honey} alt="honey" height={20} /> Name
           </Form.Label>
           <Form.Control
+            required
             onChange={(e) => setHiveName(e.target.value)}
             value={hiveName}
             type="text"
@@ -198,6 +201,7 @@ const EditHiveForm: React.FC<editForm> = ({
             <Image src={Weight} alt="weight" height={20} /> Weight
           </Form.Label>
           <Form.Control
+            required
             onChange={(e) => setWeight(Number(e.target.value))}
             value={weight}
             type="number"
@@ -209,6 +213,7 @@ const EditHiveForm: React.FC<editForm> = ({
             placement
           </Form.Label>
           <input
+            required
             onChange={(e) => setQueenPlaced(e.target.value)}
             className="rounded"
             value={queenPlaced}
