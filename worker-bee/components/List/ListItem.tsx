@@ -126,12 +126,12 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
                           </div>
                         </div>
                         <div>
-                          {ele.medicine.map((med) => (
+                          {ele.medicine?.map((med) => (
                             <Badge bg="secondary" pill key={med}>
                               {med}
                             </Badge>
                           ))}
-                          {ele.disease.map((dis) => (
+                          {ele.disease?.map((dis) => (
                             <Badge bg="dark" pill key={dis}>
                               {dis}
                             </Badge>
