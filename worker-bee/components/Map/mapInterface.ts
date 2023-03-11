@@ -8,13 +8,13 @@ export interface User {
     [hiveName: string]: [
       {
         _id: string;
-        hiveName: string;
-        weight: number;
-        queenPlaced: string;
-        temperament: number;
-        medicine: string[];
-        disease: string[];
-        location: [0, 0];
+        hiveName?: string;
+        weight?: number;
+        queenPlaced?: string;
+        temperament?: number;
+        medicine?: string[];
+        disease?: string[];
+        location?: [0, 0];
       }
     ];
   };
