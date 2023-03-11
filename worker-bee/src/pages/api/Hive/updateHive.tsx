@@ -9,9 +9,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   await dbConnect();
+
   const findId = UserSchema.findById(req.query._id)
     .then((user) => {
-      const hive = user.hives.get(req.body.apiaryName);
+      const hive = user.hives.get(req.body.oldApiary);
       const hiveId = new ObjectId(req.body._id);
       const hiveIndex = hive.findIndex(
         (obj: { _id: { equals: (arg0: ObjectId) => any } }) =>
