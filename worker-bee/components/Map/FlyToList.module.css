@@ -1,0 +1,11 @@
+.flyToList {
+  z-index: 500;
+}
+
+.flyToContainer {
+  max-height: 100px;
+}
+
+.dropdown-menu.show a {
+  color: #303030;
+}
