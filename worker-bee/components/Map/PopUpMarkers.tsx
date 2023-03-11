@@ -5,23 +5,27 @@ import { Marker, Popup } from "react-leaflet";
 const PopupMarkers: React.FC<User> = ({ hives }) => {
   if (hives) {
     const name = Object.keys(hives);
-    for (let key of name) {
-      hives[key].map((ele) => {
-        return (
-          <Marker
-            key={`${ele.name}`}
-            title={ele.name}
-            icon={BeeIcon}
-            position={[35.6762, 139.6503]}
-          >
-            <Popup>
-              <h4>{ele.name}</h4> <br />
-              <p>WT:{ele.weight}</p>
-            </Popup>
-          </Marker>
-        );
-      });
-    }
+    return (
+      <>
+        {name.map((key) => {
+          return hives[key].map((ele) => {
+            return (
+              <Marker
+                key={`${ele.hiveName}/${key}`}
+                title={ele.hiveName}
+                icon={BeeIcon}
+                position={ele.location}
+              >
+                <Popup>
+                  <h4>{ele.hiveName}</h4> <hr />
+                  <p>WT: {ele.weight}</p>
+                </Popup>
+              </Marker>
+            );
+          });
+        })}
+      </>
+    );
   }
   return null;
 };
