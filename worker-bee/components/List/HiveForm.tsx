@@ -33,7 +33,13 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
     [queenPlaced, setQueenPlaced] = useState(""),
     [temperament, setTemperament] = useState(5),
     [medicine, setMedicine] = useState<string[]>([]),
-    [disease, setDisease] = useState<string[]>([]);
+    [disease, setDisease] = useState<string[]>([]),
+    [error, setError] = useState({
+      hiveName: "",
+      weight: "",
+      queenPlaced: "",
+      state: false,
+    });
   const location = useRef<[number, number]>([0, 0]);
   let apiarys: string[] = [];
   if (hives) {
@@ -76,7 +82,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
     }
   };
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     console.log(
       apiaryName,
@@ -89,7 +95,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
       disease
     );
 
-    const response = axios
+    const response = await axios
       .put(`http://localhost:3000/api/Hive/createHive?_id=${_id}`, {
         apiaryName,
         hiveName,
@@ -144,6 +150,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
             <Image src={Honey} alt="honey" height={20} /> Name
           </Form.Label>
           <Form.Control
+            required
             onChange={(e) => setHiveName(e.target.value)}
             value={hiveName}
             type="text"
@@ -154,6 +161,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
             <Image src={Weight} alt="weight" height={20} /> Weight
           </Form.Label>
           <Form.Control
+            required
             onChange={(e) => setWeight(Number(e.target.value))}
             value={weight}
             type="number"
@@ -165,6 +173,7 @@ const HiveForm: React.FC<User> = ({ hives, _id, setUser }) => {
             placement
           </Form.Label>
           <input
+            required
             onChange={(e) => setQueenPlaced(e.target.value)}
             className="rounded"
             value={queenPlaced}
