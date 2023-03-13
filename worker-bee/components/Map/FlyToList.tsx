@@ -2,16 +2,25 @@ import { User } from "./mapInterface";
 import FlyToButton from "./FlyToButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import style from "./FlyToList.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import L from "leaflet";
 
 const FlyToList: React.FC<User> = ({ hives }) => {
   const [apiaryName, setApiaryName] = useState("Choose an Apiary");
+
+  useEffect(() => {
+    const element = document.getElementById("flyToList");
+
+    if (element) {
+      L.DomEvent.disableScrollPropagation(element);
+    }
+  }, []);
 
   if (hives) {
     const name = Object.keys(hives);
     console.log(hives[apiaryName]);
     return (
-      <div className={style.flyToList}>
+      <div id="flyToList" className={style.flyToList}>
         <Dropdown className={style.dropdownButton}>
           <Dropdown.Toggle variant="dark">{apiaryName}</Dropdown.Toggle>
           <Dropdown.Menu>
