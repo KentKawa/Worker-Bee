@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { User } from "./mapInterface";
+import L from "leaflet";
 //COMPONENTS
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import FlyToButton from "./FlyToButton";
+import { MapContainer, TileLayer } from "react-leaflet";
 import PopupMarkers from "./PopUpMarkers";
 import FlyToList from "./FlyToList";
 //STYLES
