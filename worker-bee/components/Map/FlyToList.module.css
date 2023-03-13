@@ -2,10 +2,20 @@
   z-index: 500;
 }
 
-.flyToContainer {
-  max-height: 100px;
+.dropdownButton button {
+  min-width: 110px;
 }
 
-.dropdown-menu.show a {
+.flyToContainer {
+  position: relative;
+  z-index: 900;
+  max-height: 120px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  pointer-events: auto;
+  border-radius: 1em;
+}
+
+.leaflet-container a {
   color: #303030;
 }
