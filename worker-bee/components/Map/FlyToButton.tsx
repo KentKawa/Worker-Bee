@@ -2,8 +2,8 @@ import { useMap } from "react-leaflet";
 import { User } from "./mapInterface";
 
 interface FlyTo {
-  location: [number, number];
-  hiveName: string;
+  location?: [number, number];
+  hiveName?: string;
 }
 
 const FlyToButton: React.FC<FlyTo> = ({ location, hiveName }) => {
@@ -16,7 +16,7 @@ const FlyToButton: React.FC<FlyTo> = ({ location, hiveName }) => {
     return (
       <button
         className="btn btn-light btn-sm"
-        style={{ width: "100%" }}
+        style={{ width: "100%", color: "#303030" }}
         onClick={clickHandler}
       >
         {hiveName}
