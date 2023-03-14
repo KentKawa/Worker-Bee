@@ -25,6 +25,7 @@ type ComponentState = {
 
 const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
   const [openApiary, setOpenApiary] = useState<ComponentState>({}),
+    [openDeleteApiary, setOpenDeleteApiary] = useState<ComponentState>({}),
     [openEditHives, setOpenEditHives] = useState<ComponentState>({}),
     [openDeleteHives, setOpenDeleteHives] = useState<ComponentState>({});
 
@@ -32,15 +33,38 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
     setOpenApiary((prev) => ({ ...prev, [apiaryNames]: !prev[apiaryNames] }));
   };
 
+  const toggleOpenDeleteApiary = (apiaryName: string) => {
+    setOpenDeleteApiary((prev) => ({
+      ...prev,
+      [apiaryName]: !prev[apiaryName],
+    }));
+  };
+
   const toggleOpenEdit = (hiveId: string) => {
     setOpenEditHives((prev) => ({ ...prev, [hiveId]: !prev[hiveId] }));
   };
 
-  const toggleOpenDelete = (hiveId: string) => {
+  const toggleOpenDeleteHive = (hiveId: string) => {
     setOpenDeleteHives((prev) => ({ ...prev, [hiveId]: !prev[hiveId] }));
   };
 
-  const handleDelete = (
+  const handleDeleteApiary = (apiary: string) => {
+    const response = axios
+      .put(`http://localhost:3000/api/Hive/deleteApiary?_id=${_id}`, {
+        apiaryName: apiary,
+      })
+      .then((res) => {
+        console.log(res);
+        if (setUser) {
+          setUser((prev) => ({ ...prev, hives: res.data.results.hives }));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDeleteHive = (
     hive: {
       _id: any;
       hiveName?: string;
@@ -75,6 +99,7 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
       const name = Object.keys(hives);
       name.map((apiary) => {
         setOpenApiary({ ...openApiary, apiary: false });
+        setOpenDeleteApiary({ ...setOpenDeleteApiary, apiary: false });
         hives[apiary].map((hive) => {
           setOpenEditHives((prev) => ({ ...prev, [hive._id]: false }));
           setOpenDeleteHives((prev) => ({ ...prev, [hive._id]: false }));
@@ -95,7 +120,32 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
             >
               <h3>{key}</h3>
               {openApiary[key] ? <AiFillCaretUp /> : <AiFillCaretDown />}
+              <button onClick={() => toggleOpenDeleteApiary(key)}>
+                <AiFillDelete />
+              </button>
             </div>
+            {openDeleteApiary[key] ? (
+              <div className={style.deleteContainer}>
+                <h4>Are you sure you would like to delete this apiary?</h4>
+                <Button
+                  variant="light"
+                  onClick={() => {
+                    toggleOpenDeleteApiary(key);
+                    toggleOpenApiary(key);
+                  }}
+                >
+                  Cancel
+                </Button>{" "}
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteApiary(key)}
+                >
+                  DELETE
+                </Button>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <div
               style={
                 openApiary[key] ? { display: "block" } : { display: "none" }
@@ -119,7 +169,7 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
                             </Button>
                             <Button
                               variant="outline-danger"
-                              onClick={() => toggleOpenDelete(ele._id)}
+                              onClick={() => toggleOpenDeleteHive(ele._id)}
                             >
                               <AiFillDelete />
                             </Button>
@@ -156,13 +206,13 @@ const GetHiveLocationName: React.FC<User> = ({ hives, _id, setUser }) => {
                           </h4>
                           <Button
                             variant="light"
-                            onClick={() => toggleOpenDelete(ele._id)}
+                            onClick={() => toggleOpenDeleteHive(ele._id)}
                           >
                             Cancel
                           </Button>{" "}
                           <Button
                             variant="danger"
-                            onClick={() => handleDelete(ele, key)}
+                            onClick={() => handleDeleteHive(ele, key)}
                           >
                             DELETE
                           </Button>
