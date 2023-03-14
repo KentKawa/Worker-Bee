@@ -114,7 +114,7 @@ const Profile: NextPage = (): JSX.Element => {
               ) : pages.hives ? (
                 <List hives={user.hives} _id={user._id} setUser={setUser} />
               ) : pages.graph ? (
-                <Graph />
+                <Graph hives={user.hives} />
               ) : (
                 <div></div>
               )}
