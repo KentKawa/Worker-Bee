@@ -1,14 +1,18 @@
 .profile {
   height: 100vh;
+  width: 100%;
 }
+
 .nameContainer {
   height: 5vh;
   width: 100%;
+  background-color: #303030;
 }
 
 .nameContainer h3 {
   font-size: 2em;
   padding-left: 1em;
+  color: white;
 }
 
 .buttonContainer {
@@ -34,9 +38,8 @@
 }
 
 .pages {
-  height: 80vh;
+  height: 81vh;
   position: relative;
   display: flex;
   z-index: 1;
-  overflow-y: scroll;
 }
