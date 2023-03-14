@@ -40,11 +40,11 @@ const About: NextPage = (): JSX.Element => {
             and even generate detailed reports to help you make informed
             decisions and optimize your beekeeping practices. <br />
             <br />
-            &emsp;Whether you're a hobbyist or a commercial beekeeper, our app
-            is designed to streamline your workflow, save you time, and help you
-            achieve the best possible results with your bee colonies. Sign up
-            today and take the first step towards a healthier, more productive
-            beekeeping operation!
+            &emsp;Whether you&apos;re a hobbyist or a commercial beekeeper, our
+            app is designed to streamline your workflow, save you time, and help
+            you achieve the best possible results with your bee colonies. Sign
+            up today and take the first step towards a healthier, more
+            productive beekeeping operation!
           </p>
         </div>
       </div>
