@@ -52,26 +52,29 @@ const List: React.FC<User> = ({ hives, _id, setUser }) => {
       >
         <Image
           src={plusCircle}
-          alt={formOpen ? "X to close" : "+ to open"}
+          alt={apiaryOpen ? "X to close" : "+ to open"}
           height={50}
           width={50}
         />
       </button>
-      <button
-        onClick={() => handleFormOpen("hive")}
-        className={
-          formOpen
-            ? `${style.formOpen} ${style.open}`
-            : `${style.formOpen} ${style.close}`
-        }
-      >
-        <Image
-          src={plusCircle}
-          alt={formOpen ? "X to close" : "+ to open"}
-          height={40}
-          width={40}
-        />
-      </button>
+
+      <div className={style.fixedButtonContainer}>
+        <button
+          onClick={() => handleFormOpen("hive")}
+          className={
+            formOpen
+              ? `${style.formOpen} ${style.open}`
+              : `${style.formOpen} ${style.close}`
+          }
+        >
+          <Image
+            src={plusCircle}
+            alt={formOpen ? "X to close" : "+ to open"}
+            height={40}
+            width={40}
+          />
+        </button>
+      </div>
     </div>
   );
 };
