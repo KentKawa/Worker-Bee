@@ -24,8 +24,8 @@ const HomeNavbar: React.FC = () => {
             ) : (
               <Nav.Link onClick={() => signOut()}>Logout</Nav.Link>
             )}
-            <Nav.Link>About</Nav.Link>
-            <Nav.Link>Contact</Nav.Link>
+            <Nav.Link href="/About">About</Nav.Link>
+            <Nav.Link href="/Contact">Contact</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
