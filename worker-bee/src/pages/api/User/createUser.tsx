@@ -17,14 +17,7 @@ export default async function handler(
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      hives: {
-        Pasadena: [],
-      },
-      schedule: {
-        hive1: { meds: "03-03-2023" },
-        hive2: { meds: "03-04-2023" },
-        hive3: { meds: "03-05-2023" },
-      },
+      hives: {},
     });
     try {
       const result = await user.save();
