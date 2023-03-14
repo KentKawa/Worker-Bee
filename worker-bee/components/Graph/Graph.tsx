@@ -17,107 +17,110 @@ const Graph: React.FC<User> = ({ hives }) => {
   const apiaries = hives ? Object.keys(hives) : [];
 
   useEffect(() => {
-    if (dataProp === "weight") {
-      let nullCount = 1;
-      const newDatasets = labelsArray.flatMap((apiary) => {
-        let data = Array.from({ length: nullCount }, () => null);
-        const datasets = hives[apiary].map((hive, index) => {
-          console.log(
-            `APIARY CHECK'${apiary}'`,
-            `LOOKING INTO THIS HIVE ${hive.hiveName}`,
-            `LOOKING AT THIS WEIGHT ${hive.weight}`
-          );
-          data[nullCount - 1] = hive?.weight;
-          return {
-            label: hive?.hiveName || "",
-            data: [...data],
-            backgroundColor:
-              index % 2 === 0
-                ? "rgba(155, 155, 155, 0.75)"
-                : "rgba(230, 169, 3, 0.75)",
-          };
+    if (hives) {
+      if (dataProp === "weight") {
+        let nullCount = 1;
+        const newDatasets = labelsArray.flatMap((apiary) => {
+          let data = Array.from({ length: nullCount }, () => null);
+          const datasets = hives[apiary].map((hive, index) => {
+            console.log(
+              `APIARY CHECK'${apiary}'`,
+              `LOOKING INTO THIS HIVE ${hive.hiveName}`,
+              `LOOKING AT THIS WEIGHT ${hive.weight}`
+            );
+            data[nullCount - 1] = hive?.weight;
+            return {
+              label: hive?.hiveName || "",
+              data: [...data],
+              backgroundColor:
+                index % 2 === 0
+                  ? "rgba(155, 155, 155, 0.75)"
+                  : "rgba(230, 169, 3, 0.75)",
+            };
+          });
+          console.log("NULL FILLED ARRAY", data);
+          nullCount += 1;
+          return datasets;
         });
-        console.log("NULL FILLED ARRAY", data);
-        nullCount += 1;
-        return datasets;
-      });
-      setDatasets(newDatasets);
-    } else if (dataProp === "temperament") {
-      let nullCount = 1;
-      const newDatasets = labelsArray.flatMap((apiary) => {
-        let data = Array.from({ length: nullCount }, () => null);
-        const datasets = hives[apiary].map((hive, index) => {
-          console.log(
-            `APIARY CHECK'${apiary}'`,
-            `LOOKING INTO THIS HIVE ${hive.hiveName}`,
-            `LOOKING AT THIS TEMPERAMENT ${hive.temperament}`
-          );
-          data[nullCount - 1] = hive?.temperament;
-          return {
-            label: hive?.hiveName || "",
-            data: [...data],
-            backgroundColor:
-              index % 2 === 0
-                ? "rgba(155, 155, 155, 0.75)"
-                : "rgba(230, 169, 3, 0.75)",
-          };
+        setDatasets(newDatasets);
+      } else if (dataProp === "temperament") {
+        let nullCount = 1;
+        const newDatasets = labelsArray.flatMap((apiary) => {
+          let data = Array.from({ length: nullCount }, () => null);
+          const datasets = hives[apiary].map((hive, index) => {
+            console.log(
+              `APIARY CHECK'${apiary}'`,
+              `LOOKING INTO THIS HIVE ${hive.hiveName}`,
+              `LOOKING AT THIS TEMPERAMENT ${hive.temperament}`
+            );
+            data[nullCount - 1] = hive?.temperament;
+            return {
+              label: hive?.hiveName || "",
+              data: [...data],
+              backgroundColor:
+                index % 2 === 0
+                  ? "rgba(155, 155, 155, 0.75)"
+                  : "rgba(230, 169, 3, 0.75)",
+            };
+          });
+          console.log("NULL FILLED ARRAY", data);
+          nullCount += 1;
+          return datasets;
         });
-        console.log("NULL FILLED ARRAY", data);
-        nullCount += 1;
-        return datasets;
-      });
-      setDatasets(newDatasets);
-    } else if (dataProp === "medicine") {
-      let nullCount = 1;
-      const newDatasets = labelsArray.flatMap((apiary) => {
-        let data = Array.from({ length: nullCount }, () => null);
-        const datasets = hives[apiary].map((hive, index) => {
-          console.log(
-            `APIARY CHECK'${apiary}'`,
-            `LOOKING INTO THIS HIVE ${hive.hiveName}`,
-            `LOOKING AT THIS MEDICINE ${hive.medicine}`
-          );
-          data[nullCount - 1] = hive?.medicine?.length;
-          return {
-            label: hive?.hiveName || "",
-            data: [...data],
-            backgroundColor:
-              index % 2 === 0
-                ? "rgba(155, 155, 155, 0.75)"
-                : "rgba(230, 169, 3, 0.75)",
-          };
+        setDatasets(newDatasets);
+      } else if (dataProp === "medicine") {
+        let nullCount = 1;
+        const newDatasets = labelsArray.flatMap((apiary) => {
+          let data = Array.from({ length: nullCount }, () => null);
+          const datasets = hives[apiary].map((hive, index) => {
+            console.log(
+              `APIARY CHECK'${apiary}'`,
+              `LOOKING INTO THIS HIVE ${hive.hiveName}`,
+              `LOOKING AT THIS MEDICINE ${hive.medicine}`
+            );
+            data[nullCount - 1] = hive?.medicine?.length;
+            return {
+              label: hive?.hiveName || "",
+              data: [...data],
+              backgroundColor:
+                index % 2 === 0
+                  ? "rgba(155, 155, 155, 0.75)"
+                  : "rgba(230, 169, 3, 0.75)",
+            };
+          });
+          console.log("NULL FILLED ARRAY", data);
+          nullCount += 1;
+          return datasets;
         });
-        console.log("NULL FILLED ARRAY", data);
-        nullCount += 1;
-        return datasets;
-      });
-      setDatasets(newDatasets);
-    } else if (dataProp === "disease") {
-      let nullCount = 1;
-      const newDatasets = labelsArray.flatMap((apiary) => {
-        let data = Array.from({ length: nullCount }, () => null);
-        const datasets = hives[apiary].map((hive, index) => {
-          console.log(
-            `APIARY CHECK'${apiary}'`,
-            `LOOKING INTO THIS HIVE ${hive.hiveName}`,
-            `LOOKING AT THIS DISEASE ${hive.disease}`
-          );
-          data[nullCount - 1] = hive?.disease?.length;
-          return {
-            label: hive?.hiveName || "",
-            data: [...data],
-            backgroundColor:
-              index % 2 === 0
-                ? "rgba(155, 155, 155, 0.75)"
-                : "rgba(230, 169, 3, 0.75)",
-          };
+        setDatasets(newDatasets);
+      } else if (dataProp === "disease") {
+        let nullCount = 1;
+        const newDatasets = labelsArray.flatMap((apiary) => {
+          let data = Array.from({ length: nullCount }, () => null);
+          const datasets = hives[apiary].map((hive, index) => {
+            console.log(
+              `APIARY CHECK'${apiary}'`,
+              `LOOKING INTO THIS HIVE ${hive.hiveName}`,
+              `LOOKING AT THIS DISEASE ${hive.disease}`
+            );
+            data[nullCount - 1] = hive?.disease?.length;
+            return {
+              label: hive?.hiveName || "",
+              data: [...data],
+              backgroundColor:
+                index % 2 === 0
+                  ? "rgba(155, 155, 155, 0.75)"
+                  : "rgba(230, 169, 3, 0.75)",
+            };
+          });
+          console.log("NULL FILLED ARRAY", data);
+          nullCount += 1;
+          return datasets;
         });
-        console.log("NULL FILLED ARRAY", data);
-        nullCount += 1;
-        return datasets;
-      });
-      setDatasets(newDatasets);
+        setDatasets(newDatasets);
+      }
     }
+
     ChartJS.register(Colors);
   }, [labelsArray, dataProp, hives]);
 
