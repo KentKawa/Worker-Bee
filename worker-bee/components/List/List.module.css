@@ -12,13 +12,15 @@
 }
 
 .apiaryOpen {
+  display: flex;
+  flex-direction: row;
   position: fixed;
-  border-radius: 50%;
+  border-radius: 2em;
   border: none;
   background-color: #c6c7c8;
   box-shadow: 0 2px rgba(0, 0, 0, 0.137);
-  top: 90%;
-  left: 83%;
+  top: 91%;
+  left: 80%;
   z-index: 1000;
 }
 
@@ -28,8 +30,8 @@
   border: none;
   background-color: #c6c7c8;
   box-shadow: 0 2px rgba(0, 0, 0, 0.137);
-  top: 83%;
-  left: 85%;
+  top: 84%;
+  left: 86%;
   z-index: 1000;
 }
 
